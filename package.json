@@ -1,5 +1,5 @@
 {
-  "name": "@fifo/web-storage",
+  "name": "fifo-web-storage",
   "version": "1.0.1",
   "description": "一个兼容localStorage和sessionStorage的类库",
   "type": "module",

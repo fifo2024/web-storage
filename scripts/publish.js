@@ -1,19 +1,19 @@
-import { execSync } from 'node:child_process';
-import { readFileSync, writeFileSync } from 'node:fs';
-import { resolve } from 'node:path';
+import { execSync } from "node:child_process";
+import { readFileSync, writeFileSync } from "node:fs";
+import { resolve } from "node:path";
 
 // 使用 tsc 检查，通过后才会进行打包
-const checkWorker = execSync('pnpm build', { stdio: 'inherit' });
+const checkWorker = execSync("pnpm build", { stdio: "inherit" });
 
 // 升级 package.json
-const packageJson = JSON.parse(readFileSync(resolve('package.json'), 'utf-8'));
+const packageJson = JSON.parse(readFileSync(resolve("package.json"), "utf-8"));
 const { version } = packageJson;
 const newVersion = version
-    .split('.')
+    .split(".")
     .map((v, i) => (i === 2 ? parseInt(v) + 1 : v))
-    .join('.');
+    .join(".");
 packageJson.version = newVersion;
-writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
+writeFileSync("package.json", JSON.stringify(packageJson, null, 2));
 
 // git commit
 // execSync("git add .", { stdio: "inherit" });
@@ -22,8 +22,8 @@ writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
 // });
 
 // npm 发布
-execSync(`npm publish --registry http://127.0.0.1:4873 --access public`, {
-    stdio: 'inherit',
+execSync(`npm publish --registry https://registry.npmjs.org`, {
+    stdio: "inherit",
 });
 
 /**
